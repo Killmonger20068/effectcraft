@@ -16,9 +16,6 @@ jobs:
       - name: Force Horizontal (Landscape) Mode
         run: |
           find . -name "AndroidManifest.xml" -exec sed -i 's/<activity/<activity android:screenOrientation="sensorLandscape"/g' {} +
-          echo "" >> Cargo.toml
-          echo "[package.metadata.android]" >> Cargo.toml
-          echo 'screen_orientation = "sensorLandscape"' >> Cargo.toml
 
       - name: Update Dependencies
         run: cargo update
@@ -33,4 +30,3 @@ jobs:
         with:
           name: compiled-app-apk
           path: target/**/*.apk
-
