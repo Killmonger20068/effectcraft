@@ -8,11 +8,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Lock Android NDK Version
+      - name: Lock Android NDK Version to r25c
         uses: nttld/setup-ndk@v1
         id: setup-ndk
         with:
-          ndk-version: r26d
+          ndk-version: r25c
 
       - name: Setup Rust and Cargo APK
         run: |
