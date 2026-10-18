@@ -19,6 +19,9 @@ jobs:
           rustup target add aarch64-linux-android
           cargo install cargo-apk
 
+      - name: Install Missing Android Platform
+        run: echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-30"
+
       - name: Force Horizontal Mode
         run: |
           find . -name "AndroidManifest.xml" -exec sed -i 's/<activity/<activity android:screenOrientation="sensorLandscape"/g' {} + || true
