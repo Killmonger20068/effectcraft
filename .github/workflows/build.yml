@@ -26,6 +26,13 @@ jobs:
         run: |
           find . -name "AndroidManifest.xml" -exec sed -i 's/<activity/<activity android:screenOrientation="sensorLandscape"/g' {} + || true
 
+      - name: Patch Cargo.toml for Android
+        run: |
+          echo "" >> apps/effectcraft/Cargo.toml
+          echo "[lib]" >> apps/effectcraft/Cargo.toml
+          echo "crate-type = [\"cdylib\"]" >> apps/effectcraft/Cargo.toml
+          echo "path = \"src/main.rs\"" >> apps/effectcraft/Cargo.toml
+
       - name: Update Dependencies
         run: cargo update
 
