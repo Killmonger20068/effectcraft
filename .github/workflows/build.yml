@@ -16,9 +16,12 @@ jobs:
       - name: Install Stable NDK 26
         run: echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "ndk;26.1.10909125"
 
-      - name: Force Horizontal (Landscape) Mode
+      - name: Force Horizontal Mode
         run: |
           find . -name "AndroidManifest.xml" -exec sed -i 's/<activity/<activity android:screenOrientation="sensorLandscape"/g' {} +
+
+      - name: Update Dependencies
+        run: cargo update
 
       - name: Compile the App
         run: |
