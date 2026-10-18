@@ -29,7 +29,7 @@ jobs:
       - name: Compile and Package APK
         env:
           ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
-        run: cargo apk build --release
+        run: cargo apk build --release -p effectcraft
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
