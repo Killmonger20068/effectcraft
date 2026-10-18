@@ -1,1 +1,36 @@
+name: Build Android APK
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Rust & Android NDK
+        run: |
+          rustup target add aarch64-linux-android
+          cargo install cargo-ndk
+
+      - name: Force Horizontal (Landscape) Mode
+        run: |
+          find . -name "AndroidManifest.xml" -exec sed -i 's/<activity/<activity android:screenOrientation="sensorLandscape"/g' {} +
+          echo "" >> Cargo.toml
+          echo "[package.metadata.android]" >> Cargo.toml
+          echo 'screen_orientation = "sensorLandscape"' >> Cargo.toml
+
+      - name: Update Dependencies
+        run: cargo update
+
+      - name: Compile the App
+        run: |
+          export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle
+          cargo ndk -t arm64-v8a build --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-app-apk
+          path: target/**/*.apk
 
